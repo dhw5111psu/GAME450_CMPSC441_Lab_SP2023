@@ -9,9 +9,5 @@ Edit this file to:
 Commit your changes to your local repository.
 Push your changes to your forked repository on github.
 '''
-<<<<<<< HEAD
-
 print('Hello David Witt')
-=======
-print("hello")
->>>>>>> 1d00b3cf3f0adc55131dbe735e3c6e77dc2c9d7f
+
