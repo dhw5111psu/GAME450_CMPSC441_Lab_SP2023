@@ -7,7 +7,6 @@ will generate a bunch of cities and all possible routes between them.
 import random
 import itertools
 
-
 def get_randomly_spread_cities(size, n_cities):
     """
     > This function takes in the size of the map and the number of cities to be generated 
@@ -37,7 +36,8 @@ def get_randomly_spread_cities(size, n_cities):
     pass
 def get_routes(city_names):
     """
-    It takes a list of cities and returns a list of all possible routes between those cities
+    It takes a list of cities and returns a list of all possible routes between those cities. 
+    Equivalently, all possible routes is just all the possible pairs of the cities. 
     
     :param city_names: a list of cities names
     :return: A list of tuples representing all possible links between cities, 
