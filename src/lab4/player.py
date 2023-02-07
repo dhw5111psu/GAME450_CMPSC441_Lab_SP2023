@@ -7,7 +7,7 @@ class Player:
         self.opponent_choices = []
         self.strategy = strategy
 
-    def selectAction(self, percept):
+    def selectAction(self, percept): 
         """
         > The function takes in the opponent's last move, updates the player's history of opponent's moves,
          and then updates the player's history of their own moves
