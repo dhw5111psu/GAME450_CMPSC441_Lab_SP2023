@@ -11,8 +11,10 @@ Please comment your code in the fitness function to explain how are you making s
 fulfilled. Clearly explain in comments which line of code and variables are used to fulfill each criterion.
 """
 import matplotlib.pyplot as plt
+import pygame
 import pygad
 import numpy as np
+
 
 import sys
 from pathlib import Path
@@ -20,16 +22,36 @@ from pathlib import Path
 sys.path.append(str((Path(__file__) / ".." / ".." / "..").resolve().absolute()))
 
 from src.lab5.landscape import elevation_to_rgba
+from src.lab5.landscape import get_elevation
 
 
 def game_fitness(cities, idx, elevation, size):
-    fitness = 0.0001  # Do not return a fitness of 0, it will mess up the algorithm.
     """
     Create your fitness function here to fulfill the following criteria:
     1. The cities should not be under water
     2. The cities should have a realistic distribution across the landscape
     3. The cities may also not be on top of mountains or on top of each other
     """
+    fitness = 1  # Do not return a fitness of 0, it will mess up the algorithm. Change it to one to allow change easy
+    cities_Array = solution_to_cities(cities, size)
+    #Make sure elevation is greater than .2 to keep it out of the water
+    #Need to make sure that all cities are away from each other
+    for index, c in enumerate(cities_Array):
+        #Assign C1 and C2 to check that the next and previous wont be close to the current
+        if (index+1 < len(cities_Array) and index - 1 >= 0):
+            c1 = cities_Array[index+1]
+            c2 = cities_Array[index-1]
+             #Makes sure cities are in correct elevation allowing some mountain towns as I like the idea and have weird geography
+            if(elevation[c[0]][c[1]] > .2 and elevation[c[0]][c[1]] < .85):
+                fitness+=0.25
+            else:
+                fitness-=0.05
+            #Due to my world map being more like a group of mountainious islands, the cities end up close to each other
+            #Depending on the map the distrubtion might be less spread out
+            if(abs(c[0]-c1[0]) > 250 and abs(c[1]-c1[1])> 250 and abs(c[0]-c2[0]) > 250 and abs(c[1]-c2[1]) > 250):
+                    fitness+=0.25
+            else:
+                fitness-=.15
     return fitness
 
 
@@ -113,8 +135,7 @@ if __name__ == "__main__":
 
     size = 100, 100
     n_cities = 10
-    elevation = []
-    """ initialize elevation here from your previous code"""
+    elevation = get_elevation(size)
     # normalize landscape
     elevation = np.array(elevation)
     elevation = (elevation - elevation.min()) / (elevation.max() - elevation.min())
