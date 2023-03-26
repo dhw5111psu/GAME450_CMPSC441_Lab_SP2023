@@ -98,6 +98,8 @@ if __name__ == "__main__":
 
     player = PyGameHumanPlayer()
 
+    player = PyGameAIPlayer()
+
     """ Add a line below that will reset the player variable to 
     a new object of PyGameAIPlayer class."""
 

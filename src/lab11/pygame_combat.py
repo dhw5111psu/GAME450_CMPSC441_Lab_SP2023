@@ -11,7 +11,7 @@ AI_SPRITE_PATH = Path("assets/ai.png")
 pygame.font.init()
 game_font = pygame.font.SysFont("Comic Sans MS", 15)
 
-
+##Inherits from Combat Player
 class PyGameComputerCombatPlayer(CombatPlayer):
     def __init__(self, name):
         super().__init__(name)
@@ -31,6 +31,8 @@ def run_pygame_combat(combat_surface, screen, player_sprite):
     player = PyGameHumanCombatPlayer("Legolas")
     """ Add a line below that will reset the player object
     to an instance of the PyGameAICombatPlayer class"""
+
+    player = PyGameAICombatPlayer("Legolas")
 
     opponent = PyGameComputerCombatPlayer("Computer")
     opponent_sprite = Sprite(
