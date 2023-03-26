@@ -21,7 +21,7 @@ class PyGameHumanCombatPlayer(CombatPlayer):
         super().__init__(name)
 
     def weapon_selecting_strategy(self):
-        while True:
+        while True: 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
