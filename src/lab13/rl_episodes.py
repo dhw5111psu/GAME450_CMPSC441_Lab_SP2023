@@ -42,7 +42,7 @@ class PyGamePolicyCombatPlayer(CombatPlayer):
         self.policy = policy
 
     def weapon_selecting_strategy(self):
-        self.weapon = self.policy[self.current_env_state]
+        self.weapon = self.policy[(self.current_env_state)]
         return self.weapon
 
 
@@ -74,9 +74,49 @@ def run_episodes(n_episodes):
         Return the action values as a dictionary of dictionaries where the keys are states and 
             the values are dictionaries of actions and their values.
     '''
+    PLayer1 = PyGameRandomCombatPlayer('Legolas')
+    PLayer2 = PyGameComputerCombatPlayer('Token_Bad_Guy')
+    action_values = {}
+    temp_Dict = {}
+    for i in range(n_episodes):
+        output = run_random_episode(PLayer1, PLayer2)
+        temp = get_history_returns(output)
+        temp = episode_returns_to_list(temp)
+        ###TODO FIX THIS, SPLIT THIS LIST INTO DICT WITH HEALTH HOLDING A LIST OF THE VALUES ###
+        ###CHAT GPT GENERATED ALL OF THIS"
+        '''
+        Help me make this method in python Run 'n_episodes' random episodes and return the action values for each state-action pair.
+        Action values are calculated as the average return for each state-action pair over the 'n_episodes' episodes.
+        Use the get_history_returns function to get the returns for each state-action pair in each episode.
+        Collect the returns for each state-action pair in a dictionary of dictionaries where the keys are states and
+            the values are dictionaries of actions and their returns.
+        After all episodes have been run, calculate the average return for each state-action pair.
+        Return the action values as a dictionary of dictionaries where the keys are states and 
+            the values are dictionaries of actions and their values.
 
+         The only problem is my episode_returns is a dict of dicts containing the state as a key
+           to the pair of action and reward where action
+           is the other key can you modify this code to work with that layout   
+        '''
+        for state, action, return_value in temp:
+            if state not in action_values:
+                action_values[state] = {}
+            if action not in action_values[state]:
+                action_values[state][action] = []
+            action_values[state][action].append(return_value)
+    for state in action_values:
+        for action in action_values[state]:
+            action_values[state][action] = sum(action_values[state][action]) / len(action_values[state][action])
     return action_values
 
+
+
+def episode_returns_to_list(episode_returns):
+    result = []
+    for state, actions in episode_returns.items():
+        for action, reward in actions.items():
+            result.append((state, action, reward))
+    return result
 
 def get_optimal_policy(action_values):
     optimal_policy = defaultdict(int)
@@ -99,7 +139,7 @@ def test_policy(policy):
 
 
 if __name__ == "__main__":
-    action_values = run_episodes(10000)
+    action_values = run_episodes(10000) #no more than 20k
     print(action_values)
     optimal_policy = get_optimal_policy(action_values)
     print(optimal_policy)
