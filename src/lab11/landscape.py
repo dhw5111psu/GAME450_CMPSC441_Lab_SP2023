@@ -5,12 +5,12 @@ import numpy as np
 
 def get_elevation(size, octaves=3):
     xpix, ypix = size
-    noise = PerlinNoise(octaves=octaves, seed=2)
-    # elevation = np.random.random(size)
-    elevation = np.array(
-        [[noise([i / xpix, j / ypix]) for j in range(ypix)] for i in range(xpix)]
-    )
+    noise = PerlinNoise(octaves=3)
+    noise2 = PerlinNoise(octaves=2)
+    elevation = np.array([[noise2(noise([i/xpix, j/ypix])) for j in range(ypix)] for i in range(xpix)])
     return elevation
+
+
 
 
 def elevation_to_rgba(elevation, cmap="gist_earth"):

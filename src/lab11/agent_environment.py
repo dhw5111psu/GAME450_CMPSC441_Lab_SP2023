@@ -9,9 +9,12 @@ from pygame_ai_player import PyGameAIPlayer
 
 from pathlib import Path
 
+
 sys.path.append(str((Path(__file__) / ".." / "..").resolve().absolute()))
 
 from lab2.cities_n_routes import get_randomly_spread_cities, get_routes
+from lab7.ga_cities import create_cities
+
 
 
 pygame.font.init()
@@ -88,7 +91,7 @@ if __name__ == "__main__":
         "Forthyr",
     ]
 
-    cities = get_randomly_spread_cities(size, len(city_names))
+    cities = create_cities(size, len(city_names))
     routes = get_routes(cities)
 
     random.shuffle(routes)
@@ -98,7 +101,7 @@ if __name__ == "__main__":
 
     player = PyGameHumanPlayer()
 
-    player = PyGameAIPlayer()
+    #player = PyGameAIPlayer()
 
     """ Add a line below that will reset the player variable to 
     a new object of PyGameAIPlayer class."""

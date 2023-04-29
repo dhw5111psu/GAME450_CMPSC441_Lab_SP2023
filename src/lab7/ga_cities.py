@@ -21,9 +21,10 @@ from pathlib import Path
 
 sys.path.append(str((Path(__file__) / ".." / ".." / "..").resolve().absolute()))
 
-from src.lab5.landscape import elevation_to_rgba
-from src.lab5.landscape import get_elevation
-
+#from src.lab5.landscape import elevation_to_rgba
+#from src.lab5.landscape import get_elevation
+from lab11.landscape import get_elevation
+from lab11.landscape import elevation_to_rgba
 
 def game_fitness(cities, idx, elevation, size):
     """
@@ -128,6 +129,28 @@ def show_cities(cities, landscape_pic, cmap="gist_earth"):
     plt.imshow(landscape_pic, cmap=cmap)
     plt.plot(cities[:, 1], cities[:, 0], "r.")
     plt.show()
+
+
+def create_cities(size,n_cities):
+    
+    elevation = get_elevation(size,3)
+    # normalize landscape
+    elevation = np.array(elevation)
+    elevation = (elevation - elevation.min()) / (elevation.max() - elevation.min())
+
+    # setup fitness function and GA
+    fitness = lambda cities, idx: game_fitness(
+        cities, idx, elevation=elevation, size=size
+    )
+    fitness_function, ga_instance = setup_GA(fitness, n_cities, size)
+
+    # Run the GA to optimize the parameters of the function.
+    ga_instance.run()
+
+    # Show the best solution after the GA finishes running.
+    cities = ga_instance.best_solution()[0]
+    cities_t = solution_to_cities(cities, size)
+    return cities_t 
 
 
 if __name__ == "__main__":
