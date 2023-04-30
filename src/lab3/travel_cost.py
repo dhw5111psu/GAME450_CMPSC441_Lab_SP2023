@@ -47,7 +47,8 @@ def get_route_cost(route_coordinate, game_map):
 
     from bresenham import bresenham
     path = list(bresenham(x1,y1,x2,y2)) 
-    return game_map[tuple(zip(*path))].sum()
+    damage = game_map[tuple(zip(*path))].sum()
+    return damage
 
 
 def route_to_coordinates(city_locations, city_names, routes):

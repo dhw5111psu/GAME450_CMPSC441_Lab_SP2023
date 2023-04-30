@@ -7,6 +7,7 @@ class PyGameHumanPlayer:
         pass
 
     def selectAction(self, state):
+        currentX,currentY = state.cities[state.current_city]
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
